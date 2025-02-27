@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Financiamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Simulador de Financiamento</h1>
+
+        <div class="input-group">
+            <label for="valor_carro">Valor do Carro (R$):</label>
+            <input type="number" id="valor_carro" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="entrada_percentual">Entrada (%):</label>
+            <input type="number" id="entrada_percentual" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="taxa_juros">Taxa de Juros (% ao ano):</label>
+            <input type="number" id="taxa_juros" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="meses">Número de Meses:</label>
+            <input type="number" id="meses">
+        </div>
+
+        <button onclick="calcularFinanciamento()">Calcular</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calcularFinanciamento() {
+            // Obtendo os valores dos inputs
+            const valorCarro = parseFloat(document.getElementById('valor_carro').value);
+            const entradaPercentual = parseFloat(document.getElementById('entrada_percentual').value);
+            const taxaJuros = parseFloat(document.getElementById('taxa_juros').value);
+            const meses = parseInt(document.getElementById('meses').value);
+
+            // Verifica se todos os campos estão preenchidos
+            if (isNaN(valorCarro) || isNaN(entradaPercentual) || isNaN(taxaJuros) || isNaN(meses)) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            // Cálculo do valor da entrada e do valor financiado
+            const entrada = valorCarro * (entradaPercentual / 100);
+            const valorFinanciado = valorCarro - entrada;
+
+            // Conversão da taxa de juros percentual para decimal
+            const taxaMensal = taxaJuros / 100; // Taxa mensal
+
+            // Cálculo do montante total a pagar
+            const montanteTotal = valorFinanciado * Math.pow(1 + taxaMensal, meses);
+
+            // Cálculo da diferença de juros
+            const diferencaJuros = montanteTotal - valorFinanciado;
+
+            // Cálculo da parcela mensal
+            const parcelaMensal = montanteTotal / meses;
+
+            // Exibindo os resultados
+            const resultado = `
+                <p><strong>Valor da entrada:</strong> R$ ${entrada.toFixed(2)}</p>
+                <p><strong>Valor financiado:</strong> R$ ${valorFinanciado.toFixed(2)}</p>
+                <p><strong>Montante total pago:</strong> R$ ${montanteTotal.toFixed(2)}</p>
+                <p><strong>Parcela mensal:</strong> R$ ${parcelaMensal.toFixed(2)}</p>
+                <p><strong>Juros a ser pago:</strong> R$ ${diferencaJuros.toFixed(2)}</p>
+            `;
+
+            // Exibir resultado
+            document.getElementById('result').innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>

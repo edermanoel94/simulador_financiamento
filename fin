@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+
+import sys
+
+# Verifica se os argumentos necessários foram passados
+if len(sys.argv) != 5:
+    print("Uso: python financiamento.py <valor_carro> <entrada_percentual> <taxa_juros> <meses>")
+    sys.exit(1)
+
+# Obtendo os valores da linha de comando
+valor_carro = float(sys.argv[1])
+entrada_percentual = float(sys.argv[2])
+taxa_juros = float(sys.argv[3])
+meses = int(sys.argv[4])
+
+# Cálculo do valor financiado
+entrada = valor_carro * (entrada_percentual / 100)
+valor_financiado = valor_carro - entrada
+
+# Conversão da taxa de juros percentual para decimal
+taxa_mensal = taxa_juros / 100
+
+# Cálculo do montante total a pagar
+montante_total = valor_financiado * ((1 + taxa_mensal) ** meses)
+
+diferenca_juros = montante_total - valor_financiado
+
+# Cálculo da parcela mensal
+parcela_mensal = montante_total / meses
+
+# Exibindo os resultados
+print(f"Valor da entrada: R$ {entrada:.2f}")
+print(f"Valor financiado: R$ {valor_financiado:.2f}")
+print(f"Montante total pago: R$ {montante_total:.2f}")
+print(f"Parcela mensal: R$ {parcela_mensal:.2f}")
+print(f"Juros a ser pago: R$ {diferenca_juros:.2f}")
