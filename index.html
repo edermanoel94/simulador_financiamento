@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Financiamento</title>
+    <!-- CDN do Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,35 +51,58 @@
 <body>
 
     <div class="container">
-        <h1>Simulador de Financiamento</h1>
+        <h1 class="text-center mb-4">Simulador de Financiamento</h1>
 
-        <div class="input-group">
-            <label for="valor_carro">Valor do Carro (R$):</label>
-            <input type="number" id="valor_carro" step="0.01">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="valor_carro" class="col-form-label">Valor carro:</label>
+          </div>
+          <div class="col-auto">
+            <input type="number" id="valor_carro" class="form-control">
+          </div>
         </div>
 
-        <div class="input-group">
-            <label for="entrada_percentual">Entrada (%):</label>
-            <input type="number" id="entrada_percentual" step="0.01">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="entrada_percentual" class="form-label">Entrada (%):</label>
+          </div>
+          <div class="col-auto">
+            <input type="number" id="entrada_percentual" class="form-control">
+          </div>
         </div>
 
-        <div class="input-group">
-            <label for="taxa_juros">Taxa de Juros (% ao ano):</label>
-            <input type="number" id="taxa_juros" step="0.01">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="taxa_juros" class="form-label">Taxa de Juros (% ao ano):</label>
+          </div>
+          <div class="col-auto">
+            <input type="number" id="taxa_juros" step="0.01" class="form-control">
+          </div>
         </div>
 
-        <div class="input-group">
-            <label for="meses">Número de Meses:</label>
-            <input type="number" id="meses">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="meses" class="form-label">Número de Meses:</label>
+          </div>
+          <div class="col-auto">
+            <input type="number" id="meses" class="form-control">
+          </div>
         </div>
 
-        <button onclick="calcularFinanciamento()">Calcular</button>
+          <button onclick="calcularFinanciamento(event)" onkeypress="calcularFinanciamento(event)" class="btn btn-success w-100">Calcular</button>
+        </div>
 
-        <div class="result" id="result"></div>
+        <div class="result mt-4" id="result"></div>
     </div>
 
     <script>
-        function calcularFinanciamento() {
+        function calcularFinanciamento(event) {
+
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            alert("OK");
+            return;
+          }
             // Obtendo os valores dos inputs
             const valorCarro = parseFloat(document.getElementById('valor_carro').value);
             const entradaPercentual = parseFloat(document.getElementById('entrada_percentual').value);
@@ -119,5 +144,8 @@
             document.getElementById('result').innerHTML = resultado;
         }
     </script>
+
+    <!-- Inclusão do JS do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
